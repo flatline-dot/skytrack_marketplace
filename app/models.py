@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey, String, Integer, Date
 from sqlalchemy.orm import relationship
 
-from create_engine_db import Base
+from .create_engine_db import Base
 
 
 class Book(Base):
@@ -25,7 +25,7 @@ class User(Base):
     firstname = Column(String)
     last_name = Column(String)
     email = Column(String, unique=True, index=True)
-    order = relationship('Order', backref='users')
+    orders = relationship('Order', backref='user')
 
 
 class Order(Base):
@@ -33,7 +33,7 @@ class Order(Base):
     id = Column(Integer, primary_key=True, index=True)
     reg_date = Column(Date)
     user_id = Column(ForeignKey('user.id', ondelete='CASCADE'))
-    orderitem = relationship('Ordritem', backref='orders')
+    orderitems = relationship('Ordritem', backref='order')
 
 
 class Orderitem(Base):
