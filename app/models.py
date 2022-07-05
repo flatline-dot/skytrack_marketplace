@@ -33,7 +33,7 @@ class Order(Base):
     id = Column(Integer, primary_key=True, index=True)
     reg_date = Column(Date)
     user_id = Column(ForeignKey('user.id', ondelete='CASCADE'))
-    orderitems = relationship('Ordritem', backref='order')
+    orderitems = relationship('Orderitem', backref='order')
 
 
 class Orderitem(Base):
