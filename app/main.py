@@ -18,7 +18,7 @@ app = FastAPI()
             "description": "User not found",
             "content": {
                 "application/json": {
-                    "example": {"msg": "User not found"}
+                    "example": {"detail": "User not found"}
                 }
             }
         }
@@ -47,11 +47,11 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
     }
 )
 def get_user_orders(user_id: int, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.user_id == user_id).first()
+    user = db.query(User).filter(User.id == user_id).first()
     print(user)
     if not user:
-        raise HTTPException(status_code=404, detail={"description": "User not found"})
-    orders = db.query(Order).filter(Order.user_id == user_id).all()
+        raise HTTPException(status_code=404, detail="User not found")
+    orders = db.query(Order).filter(Order.id == user_id).all()
     return orders
 
 
@@ -93,7 +93,7 @@ def create_order(order: OrderCreateSchema, db: Session = Depends(get_db)):
             db.rollback()
             raise HTTPException(status_code=422, detail={"description": "Data entry error"})
     else:
-        raise HTTPException(status_code=404, detail={"description": "User not found"})
+        raise HTTPException(status_code=404, detail="User not found")
 
 
 @app.get(
@@ -114,5 +114,5 @@ def create_order(order: OrderCreateSchema, db: Session = Depends(get_db)):
 def get_order(order_id: int, db: Session = Depends(get_db)):
     order = db.query(Order).filter(Order.id == order_id).first()
     if not order:
-        raise HTTPException(status_code=404, detail={"description": "Order not found"})
+        raise HTTPException(status_code=404, detail="Order not found")
     return order
