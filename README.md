@@ -1,5 +1,5 @@
 ### skytrack_marketplace
-#### Service allows to recive information about user orders
+#### Service allows to receive information about user orders
 #### Run
 ````python
 git clone https://github.com/flatline-dot/skytrack_marketplace.git
